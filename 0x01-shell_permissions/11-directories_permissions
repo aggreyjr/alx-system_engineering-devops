@@ -1,2 +1,2 @@
 #!/bin/bash
-chomd -R ugo+K
+chmod -R ugo+K
