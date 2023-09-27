@@ -1,6 +1,26 @@
-nstalls a Nginx server
+# This manifest installs ngix and adds redirect page
 
-exec {'install':
-  provider => shell,
-  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Tolulope05 permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
+package {'nginx':
+  ensure => present,
+  name   => 'nginx',
+}
+
+file {'/var/www/html/index.html':
+  ensure  => present,
+  path    => '/var/www/html/index.html',
+  content => 'Hello World!',
+}
+
+file_line { 'redirect_me':
+  ensure => present,
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
+}
+
+service { 'nginx':
+  ensure     => running,
+  hasrestart => true,
+  require    => Package['nginx'],
+  subscribe  => File_line['redirect_me'],
 }
