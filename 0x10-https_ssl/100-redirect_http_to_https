@@ -19,5 +19,5 @@ frontend aggreyjr-tech-frontend
 
 backend aggreyjr-tech-backend
 	balance roundrobin
-	server 453-web-01 100.26.178.187:80 check
-	server 453-web-02 54.236.8.6:80 check
+	server 230707-web-01 100.26.178.187:80 check
+	server 230707-web-02 54.236.8.6:80 check
